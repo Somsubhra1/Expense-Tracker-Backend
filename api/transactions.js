@@ -12,14 +12,15 @@ router.get("/", async (req, res) => {
 router.post("/", async (req, res) => {
   try {
     const { text, amount } = req.body;
-    await Transaction.create({
+    const newTransaction = await Transaction.create({
       data: {
         text,
         amount,
       },
     });
-    res.json({ success: true });
+    res.json({ success: true, data: newTransaction });
   } catch (error) {
+    console.log(error);
     res.status(400).json({ success: false, error: ["Validation Error"] });
   }
 });
