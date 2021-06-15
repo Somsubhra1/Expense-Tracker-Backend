@@ -2,10 +2,18 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "sqlite"
+  // url      = env("DATABASE_URL")
+  url = "file:./db.sqlite"
 }
 
 generator client {
   provider = "prisma-client-js"
+}
+
+model Transaction {
+  id Int @id @default(autoincrement())
+  text String
+  amount Float 
+  createdAt DateTime @default(now())
 }
