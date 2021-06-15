@@ -12,7 +12,7 @@ router.get("/", async (req, res) => {
 router.post("/", async (req, res) => {
   try {
     const { text, amount } = req.body;
-    const newTransaction = await Transaction.create({
+    await Transaction.create({
       data: {
         text,
         amount,
