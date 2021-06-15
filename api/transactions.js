@@ -20,8 +20,36 @@ router.post("/", async (req, res) => {
     });
     res.json({ success: true });
   } catch (error) {
-    res.json({ success: false, error: ["Validation Error"] });
+    res.status(400).json({ success: false, error: ["Validation Error"] });
   }
+});
+
+router.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+
+  const transaction = await Transaction.findUnique({
+    where: {
+      id: parseInt(id),
+    },
+  });
+
+  if (!transaction) {
+    return res.status(404).json({
+      success: false,
+      error: "No transaction found",
+    });
+  }
+
+  await Transaction.delete({
+    where: {
+      id: parseInt(id),
+    },
+  });
+
+  res.status(200).json({
+    success: true,
+    data: {},
+  });
 });
 
 module.exports = router;
